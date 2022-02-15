@@ -19,6 +19,7 @@ fn main() {
     // 3.2
     // 型注釈
     let _guess: u32 = "42".parse().expect("Not a number!");    // 数字ではありません！
+    let _guess = "42".parse::<u32>().expect("Not a number!");
     // error!
     // let _guess = "42".parse().expect("Not a number!"); 
 
