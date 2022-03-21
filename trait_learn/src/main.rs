@@ -1,4 +1,4 @@
-use trait_learn::{Summary, Tweet};
+use trait_learn::{notify, returns_summarizable, Summary, Tweet};
 fn main() {
     let tweet = Tweet {
         username: String::from("horse_ebooks"),
@@ -11,4 +11,8 @@ fn main() {
     };
 
     println!("1 new tweet: {}", tweet.summarize());
+
+    notify(&tweet);
+    let sum = returns_summarizable();
+    println!("1 new tweet: {}", sum.summarize());
 }
