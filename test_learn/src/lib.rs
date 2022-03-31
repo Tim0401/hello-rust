@@ -79,6 +79,8 @@ mod tests {
         Guess::new(200);
     }
 
+    // Result型を返す形でテストができる
+    // testでも?を使いたい場合に有用 should_panicは使えない
     #[test]
     fn it_works() -> Result<(), String> {
         if 2 + 2 == 4 {
