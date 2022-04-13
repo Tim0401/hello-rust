@@ -13,10 +13,20 @@ fn main() {
     // borrow
     let equal_to_x = |z| z == x;
 
-    // ここでは、xを使用できません: {:?}
-    println!("can't use x here: {:?}", x);
+    // moveした場合ここでは、xを使用できません: {:?}
+    // println!("can't use x here: {:?}", x);
 
     let y = vec![1, 2, 3];
 
     assert!(equal_to_x(y));
+
+    //　イテレータ
+    let v1 = vec![1, 2, 3];
+
+    let v1_iter = v1.iter();
+    // ループが所有権を奪って、裏でiterを可変にしている
+    for val in v1_iter {
+        // {}でした
+        println!("Got: {}", val);
+    }
 }
