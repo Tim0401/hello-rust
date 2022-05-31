@@ -204,25 +204,76 @@ fn main() {
     }
 
     // at @演算子 値を検査しつつ、1つのパターン内で変数に保存
-    enum Message {
+    enum Message2 {
         Hello { id: i32 },
     }
-    let msg = Message::Hello { id: 5 };
+    let msg = Message2::Hello { id: 5 };
     match msg {
-        Message::Hello {
+        Message2::Hello {
             id: id_variable @ 3..=7,
         } => {
             // 範囲内のidが見つかりました: {}
             println!("Found an id in range: {}", id_variable)
         }
-        Message::Hello { id: 10..=12 } => {
+        Message2::Hello { id: 10..=12 } => {
             // 別の範囲内のidが見つかりました
             println!("Found an id in another range")
         }
-        Message::Hello { id } => {
+        Message2::Hello { id } => {
             // それ以外のidが見つかりました
             println!("Found some other id: {}", id)
         }
+    }
+
+    // 以下上と重複あり
+
+    // ref
+    let robot_name = Some(String::from("Bors"));
+
+    match robot_name {
+        // 名前が見つかりました: {}
+        // refで所有権を移動しない &と同じ意味
+        Some(ref name) => println!("Found a name: {}", name),
+        None => (),
+    }
+    // robot_nameは: {:?}
+    println!("robot_name is: {:?}", robot_name);
+
+    // ref mut
+    let mut robot_name = Some(String::from("Bors"));
+    match robot_name {
+        // 別の名前
+        Some(ref mut name) => *name = String::from("Another name"),
+        None => (),
+    }
+    println!("robot_name is: {:?}", robot_name);
+
+    // マッチガード
+    let num = Some(4);
+    match num {
+        // 5未満です: {}
+        Some(x) if x < 5 => println!("less than five: {}", x),
+        Some(x) => println!("{}", x),
+        None => (),
+    }
+
+    // パターンがシャドーイングすることに対する解決
+    let x = Some(5);
+    let y = 10;
+    match x {
+        Some(50) => println!("Got 50"),
+        Some(n) if n == y => println!("Matched, n = {:?}", n),
+        _ => println!("Default case, x = {:?}", x),
+    }
+    println!("at the end: x = {:?}, y = {:?}", x, y);
+
+    let x = 4;
+    let y = false;
+    match x {
+        // はい
+        4 | 5 | 6 if y => println!("yes"),
+        // いいえ
+        _ => println!("no"),
     }
 }
 
